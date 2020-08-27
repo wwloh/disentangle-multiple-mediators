@@ -25,7 +25,7 @@ models[["Y_Mint"]] <- as.formula(
          "+", paste(paste0("A:",intM),collapse="+"),
          "+ Ideology + Age + Gender"))
 
-# consider all permutations
+# consider all permutations for sensitivity analysis --------------------------
 ## appropriate only for small number of mediators
 allperms <- expand.grid(lapply(1:6, function (x) 6:1))
 allperms <- allperms[apply(allperms, 1, function(x) 
@@ -33,6 +33,15 @@ allperms <- allperms[apply(allperms, 1, function(x)
 rownames(allperms) <- NULL
 colnames(allperms) <- paste0("Mp",1:6)
 head(allperms)
+
+## alternative for larger number of mediators
+if (FALSE) {
+  # install.packages("gtools")
+  library("gtools")
+  allperms.gtools <- gtools::permutations(n=6,r=6)
+  head(allperms.gtools)
+  nrow(allperms.gtools)
+}
   
 # load the data ---------------------------------------------------------------
 obs_Data <- read.csv("poli-inclu-study3-InclusionVsControl.csv")
